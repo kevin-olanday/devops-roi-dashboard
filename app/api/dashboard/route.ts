@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { fetchDashboardData } from '@/lib/data';
 import { isMonthPeriod } from '@/lib/types';
 
+export const dynamic = 'force-dynamic';
+
 const ROLLING_PERIODS = new Set(['7d', '30d', '90d', 'ytd']);
 
 function isValidPeriod(p: string): boolean {

@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { isMonthPeriod, periodToLabel } from '@/lib/types';
+
+export const dynamic = 'force-dynamic';
 import type { DaySummary, RecentFailure, JobHealthData } from '@/lib/types';
 
 function getPeriodBounds(period: string): { start: Date; end: Date } {
