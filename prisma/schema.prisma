@@ -1,0 +1,35 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model AutomationJob {
+  id                            String         @id @default(cuid())
+  name                          String
+  description                   String         @default("")
+  sourceSystem                  String
+  department                    String
+  manualTimeSavedPerItemMinutes Int
+  activeStatus                  Boolean        @default(true)
+  createdAt                     DateTime       @default(now())
+  executions                    JobExecution[]
+}
+
+model JobExecution {
+  id                       String        @id @default(cuid())
+  jobId                    String
+  job                      AutomationJob @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  executedAt               DateTime
+  status                   String
+  itemsProcessedCount      Int           @default(1)
+  executionDurationSeconds Int
+  errorMessage             String?
+
+  @@index([jobId])
+  @@index([executedAt])
+  @@index([status])
+}
